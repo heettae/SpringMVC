@@ -1,0 +1,246 @@
+* 프레임워크 (Framework)
+
+=> 뼈대,구조(틀)
+=> 기능을 미리 클래스/인터페이스 형태로 만들어놓고 제공하는 반제품(즉, 어느정도 완성된 상태의 기능)
+
+* 스프링 프레임워크 : 자바-웹 애플리케이션을 개발하기위한 오픈소스 프레임워크(경량 프레임워크)
+
+
+서버중심												 클라이언트중심(모바일)
+확장성/유지보수   =====>   생산성 / 안정성 
+중량프레임워크                   경량프레임워크
+
+ - 복잡함 -> 단순함  :   기존의 자바클래스,인터페이스 기능
+  - 전반적인 프로젝트 설계 유리 (개발자는 개발 포커스)
+  - 다른 프레임워크의 포용
+ - 개발 생산성 도구 지원
+
+* 스프링 주요 특징
+ 1) POJO 기반의 구성 (순수자바)
+ 2) 제어의 역행(IoC, Inversion of Control) 
+      - 객체간의 느슨한 결합
+ 3) 의존성 주입(DI, Dependency Injection)
+ 4) 관점지향프로그래밍(AOP, Aspect-Oriented-Programming)
+ 5) 영속성(DB)관련 다양한 서비스 제공
+
+ * 스프링 주요 기능
+  Core : 다른기능과 설정을 분리하기 위한 IoC기능을 제공
+  Context : 스프링의 기본기능, 애플리케이션(프로젝트)의 각 기능을 하는 객체(bean)에대한 접근방법 제공
+  DAO : JDBC기능을 편리하기하게 제공
+  ORM : 영속성 프레이워크 기능 제공(하이버네이트,마이바티스)
+  AOP : 관점 지향 프로그래밍 기능 제공
+  WEB : 웹 개발에 필요한 기능 제공
+  WebMVC : 스프링MVC 구현하기위한 기능제공
+
+  IoC(제어의 역행) : 메서드,객체의 호출작업을 개발자가 결정X
+                  외부에서 결정되는 것
+  의존성: 어떤 객체가 혼자서 처리할 수 없다.( 외부의 도움을 통해서 처리가능)
+
+ 의존성 주입 : 의존적인 객체를 직접 생성, 제어 X
+             제어의 역행으로 특정 객체에 필요한 객체를
+                    외부에서 결정시켜서 처리하는것
+              => 객체간의 연관관계를 직접 규정
+
+ * 강한 결합(tightly coupled) / 약한 결합(loosely coupled)
+ => 유사한기능, 관련있는 기능 강한결합, 관련이 없은 기능 약한결합
+
+
+*  Spring(Legacy)  vs  Spring boot
+
+
+  - Spring(Legacy)
+     아직까지는 점유율이 높음(점차 변경중)
+        구글링하기 쉽다(다양한 자료 존재)
+        기존의 프로젝트를 이해하기 쉬움 
+     모든 버전의 스프링을 사용가능
+      -> 초기세팅(설정)이 어려움, WAS(tomcat)사용하기 때문에 많은 리소스를 사용
+
+  - Spring boot
+    점유율이 증가중
+      별도의 설정이 필요없음(알아서 세팅)
+      WAS가 필요없음 (내장서버 있음)
+      짧은 로딩시간 => 간편한 테스팅
+    -> 기존의 설정과 다른 형태의 구현
+        JSP설정들을 추가적 설정필요
+  
+
+  * 스프링MVC 웹 프로젝트
+ 
+  - Presentation Layer : UI를 담당하는 구성요소.(JSP,HTML,CSS,JS..../모바일)
+     => View
+     => Controller
+  
+  - Business Logic Layer(서비스 계층) : 고객의 요구사항을 반영하는 계층
+                                       사용자의 환경,기능적 요구사항 구현
+     => Model                                        
+                                       
+  - Data Access Layer (영속계층/Persistence Layer) : 데이터 처리 계층
+     => DAO + MyBatis
+  
+  - DataBase                                         
+     => Mysql,Oracle,....
+
+
+
+  MyBatis
+   (https://mybatis.org/mybatis-3/ko/index.html)
+  마이바티스는 개발자가 지정한 SQL, 저장프로시저 그리고 몇가지 
+  고급 매핑을 지원하는 퍼시스턴스 프레임워크이다. 
+  마이바티스는 JDBC로 처리하는 상당부분의 코드와 파라미터 설정및 결과 
+  매핑을 대신해준다. 마이바티스는 데이터베이스 레코드에 원시타입과 Map 인터페이스 
+  그리고 자바 POJO 를 설정해서 매핑하기 위해 XML과 애노테이션을 사용할 수 있다.
+  
+  => DB를 편하게 사용하도록 만들어놓은 형태( SQL Mapper라이브러리 )
+     - try~catch~finally (생략)
+     - PreparedStatement 객체 ???  - setXXXX(1,ooo) (생략)
+     - ResultSet 객체 - getXXXX(1) (생략)
+     - rs -> Object -> List (생략)
+     
+     - 1) XML방식(복잡), 2) 애노테이션(간단) 2가지 방식 으로 SQL 처리 가능
+     - Spring과 자동화된 처리가 많음 (라이브러리 설치필요)
+     
+     - 동적SQL문 제어가능(if문,for문....)
+  
+  
+
+      DAO     <- MyBatis-Spring ->       MyBatis         DB(Mysql)
+    (스프링)
+
+	[ https://mvnrepository.com/ ]	
+  * MyBatis,MyBatis-Spring, spring-jdbc, spring-test 라이브러리 검색후 설치
+
+  
+  * MyBatis 사용하는 방법
+  
+   1) XML 사용해서 SQL 설정, DAO파일 생성 XML파일과 연결해서 사용
+     장점 : SQL 분리(xml파일) => SQL 수정, 유지보수 우수함 
+     단점 : 개발시 코드의 양이 증가, 복잡함 증가  
+   
+   2) 어노테이션 + 인터페이스 사용하여 SQL 작성
+     장점 : 별도의 DAO 객체 없이도 개발가능(생산성 증가), 간단한 SQL 수행하기쉽다.
+     단점 : SQL 변경시 마다, 매번 컴파일 수행, 복잡합 SQL 수행하기 어렵다. 
+   
+   3) 인터페이스(어노테이션) + XML 사용 방법
+     장점 : 간단한 SQL -어노테이션 사용, 복잡한SQL- XML 사용 (유연한 대처가능)
+     단점 : 개발자의 성향에 따라 결정 될 수 있다. 유지보수가 많은경우 부적합하다.
+   
+   
+   * MyBatis 사용 순서
+   
+    - ( 요구사항 분석 )
+    - 테이블 생성 & 디비 계정 준비
+    - 도메인 객체 설계(DTO클래스 작성)
+      => 프로젝트 개발에 필요한 중요한 단어 "도메인"
+      => 물리적인 환경으로 분리가 가능한 단위
+    - DAO 인터페이스 생성
+    - 실행해야하는 동작을 추상메서드로 정의
+    - XML Mapper 생성, SQL 작성
+    	- XML Mapper를 저장하는 위치를 설정(저장경로)
+    	- XML Mapper 사용가능한 DTD 추가
+    	- SQL 구문 작성    
+    - MyBatis - XML Mapper를 연결하도록 설정
+    - DAO 객체를 구현 -> 기능 메서드 오버라이딩
+    - 스프링 DAO 사용(테스트)
+   
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   * 의존 객체 자동주입 (Automatic Dependency Injection)
+     : 스프링 설정파일(xml)에서 대상을 명시 하지 않아도, 
+      자동으로 의존객체 대상을 찾아서 필요한 의존성을 주입하는것 (스프링 컨테이너)
+      
+      1) @Resource : java에서 지원하는 어노테이션(특정 프레임워크에 종속x)
+         * 의존 객체를 찾는 순서 *
+         [ 이름 -> 타입 -> @Qualifier -> 실패 ]
+         
+         * <context:annotation-config/> 구문이 필수 (XML 파일에 설정)
+         
+         * 사용가능한 위치 : 멤버변수,setter 메서드           
+      
+      2) @Autowired : Spring에서 지원하는 어노테이션(Spring 프레임워크에 종속)
+      	 * 의존 객체를 찾는 순서 *
+         [ 타입 -> 이름  -> @Qualifier -> 실패 ]
+         
+         * <context:annotation-config/> 구문이 필수 (XML 파일에 설정)
+         * 사용가능한 위치 : 멤버변수, setter메서드,생성자,일반 메서드
+         
+      3) @Inject : java에서 지원하는 어노테이션(특정 프레임워크에 종속x)
+         * 의존 객체를 찾는 순서 *
+         [ 타입 -> @Qualifier -> 이름 -> 실패 ]
+         
+         * 메이븐을 사용해서 Junit라이브러리 설치(의존성 주입)
+         * 사용가능한 위치 : 멤버변수, setter메서드,생성자,일반 메서드
+       
+
+	 **	@Qualifier : 동일한 객체(bean)가 여러개 있을경우 문제 발생 
+		
+		스프링이 객체 주입전에 컨테이터를 초기화 진행 -> Exception
+		(주입 객체는 1개-> 주입객체 1개 이상 구분 불가능)
+		
+		대상을 구분가능한 이름을 추가설정
+		
+		
+		
+
+
+	* 서비스 계층 - 비지니스 계층
+	
+		MVC-Action페이지 ( Controller -> action -> DAO )
+		
+		
+		* 컨트롤러와 DAO 사이의 접착제 => 서비스
+		* 고객마다 변경사항을 대처 (완충작용)
+		(회사마다 DB사용 종류에 따른 처리)
+		* 외부 호출의 영속계층 종속을 막아준다.
+		 => 컨트롤러의 역할이 너무 많기 때문에 
+		 
+		 request(요청) -> Controller <-> Service <-> DAO <-> Mybatis <-> DB
+		 					|
+		 					View
+		
+		
+	    
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE `springdb`.`tbl_member` (
+  `userid` VARCHAR(50) NOT NULL,
+  `userpw` VARCHAR(45) NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `useremail` VARCHAR(200) NOT NULL,
+  `regdate` TIMESTAMP NULL DEFAULT now(),
+  `updatedate` TIMESTAMP NULL DEFAULT now(),
+  PRIMARY KEY (`userid`),
+  UNIQUE INDEX `useremail_UNIQUE` (`useremail` ASC) VISIBLE);
+
+
+
+
+
+
+
+
+
+
+
+

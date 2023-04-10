@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+	<!-- 웹에 대한 정보를 제외한 모든 설정을 제어 -->
+	
+	<!-- 디비연결 객체 (dataSource) -->	
+<!-- 	<bean id="dataSource"
+		  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		  
+		  <qualifier value="ds1"/>
+		  <property name="driverClassName"
+				    value="com.mysql.cj.jdbc.Driver"/>
+		  <property name="url" 
+		  			value="jdbc:mysql://localhost:3306/springdb?serverTimezone=Asia/Seoul"/>
+		  			server time zone Error 
+		  <property name="username" value="root"/>
+		  <property name="password" value="1234"/>
+		  
+	</bean> -->
+	
+	<bean id="dataSource"
+		  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		  
+		  <qualifier value="ds1"/>
+		  <property name="driverClassName"
+				    value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+		  <property name="url" 
+		  			value="jdbc:log4jdbc:mysql://localhost:3306/springdb?serverTimezone=Asia/Seoul"/>
+		  			<!-- server time zone Error  -->
+		  <property name="username" value="root"/>
+		  <property name="password" value="1234"/>
+		  
+	</bean>
+	
+	
+	
+	
+	
+	<!-- 디비연결 객체 (dataSource) -->	
+	
+<!-- 	
+	<bean id="dataSource2"
+		  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	</bean>
+	 -->
+	 
+	 
+	<!-- 디비연결 + myBatis 연결 (설정) -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	 	<property name="dataSource" ref="dataSource"/>
+	 	<property name="configLocation" value="classpath:/mybatis-config.xml"/>
+	 	<property name="mapperLocations" 
+	 			  value="classpath:mappers/**/*Mapper.xml"/>
+	 			
+	</bean>
+	<!-- 디비연결 + myBatis 연결 (설정) -->
+	 
+	 
+	 
+	<!-- 디비연결 + myBatis설정 + 자원해제 -->
+	<bean id="sqlSession" 
+	      class="org.mybatis.spring.SqlSessionTemplate" 
+	      destroy-method="clearCache" >
+	    <constructor-arg  name="sqlSessionFactory"  ref="sqlSessionFactory" />  
+	
+	</bean>   
+
+	 
+	<!-- 디비연결 + myBatis설정 + 자원해제 -->
+	 
+	 <context:component-scan base-package="com.itwillbs.persistence" />
+	 <context:component-scan base-package="com.itwillbs.service" />
+	 
+</beans>
