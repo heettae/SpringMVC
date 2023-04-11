@@ -1,5 +1,7 @@
 package com.itwillbs.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,26 @@ public class MemberServiceImpl implements MemberService{
 		
 		
 		return memberResultVO;
+	}
+
+	
+	// 회원정보 수정
+	@Override
+	public void memberUpdate(MemberVO vo) {
+		mdao.updateVO(vo);
+		
+	}
+	
+	// 회원 탈퇴
+	@Override
+	public void memberDelete(MemberVO vo) {
+		mdao.deleteMember(vo);
+		
+	}
+
+	@Override
+	public List<MemberVO> memberList() {
+		return mdao.getMemberList();
 	} 
 
 	

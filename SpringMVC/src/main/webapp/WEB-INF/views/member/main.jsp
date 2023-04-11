@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,18 @@
 	<% }%>
 	
 	<h2><a href="/member/info"> 회원정보 보기</a> </h2>
-	
+	<h2><a href="/member/update"> 회원정보 수정</a> </h2>
+	<h2><a href="/member/delete"> 회원탈퇴</a> </h2>
+	<h2><a href="/board/list"> 게시판</a> </h2>
+<%-- 	
+	<%if(id!=null && id.equals("admin")){ %> 
+	<h2><a href="/member/list"> 회원정보 목록</a> </h2>
+	<%} %>
+	 --%>
+	 
+	 <c:if test="${!empty id && id.equals('admin') }">
+	 <h2><a href="/member/list"> 회원정보 목록</a> </h2>
+	 </c:if>
 	
 </body>
 </html>

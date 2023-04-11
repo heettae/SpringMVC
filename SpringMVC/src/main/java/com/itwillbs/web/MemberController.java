@@ -1,6 +1,7 @@
 package com.itwillbs.web;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -196,6 +197,101 @@ public class MemberController {
 		logger.info(" /info -> info.jsp 페이지 이동 ");
 		
 		return "/member/info";
+	}
+	
+	
+	// 회원정보 수정 GET
+	//http://localhost:8080/member/update
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	public String updateGET(MemberVO vo, HttpSession session, Model model) {
+	
+		logger.info(" updateGET() 호출 ");
+		// 회원 아이디(PK) => session
+		String id = (String) session.getAttribute("id");
+		if(id == null) {
+			return "redirect:/member/login";
+		}
+		
+		// 세션에 저장된 아이디 정보를 사용해서
+		// 기존의 유저정보를 가져오기
+		// 서비스 -> DAO -> mapper
+	
+		// DB에서 가져온 데이터를 view 페이지로 전달
+		model.addAttribute(service.memberInfo(id));
+		logger.info(vo+"");
+	
+		
+		return "/member/updateForm";
+	}
+	
+	// 회원정보 수정 POST
+	//http://localhost:8080/member/update
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String updatePOST(MemberVO vo) {
+	
+		logger.info(" updatePOST(vo) 호출 ");
+
+		service.memberUpdate(vo);
+		
+		// DB에서 가져온 데이터를 view 페이지로 전달
+		logger.info(vo+"");
+	
+		
+		return "redirect:/member/main";
+	}
+	
+	
+	// 회원탈퇴 GET
+	//http://localhost:8080/member/delete
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String deleteGET(MemberVO vo, HttpSession session, Model model) {
+	
+		logger.info(" deleteGET() 호출 ");
+		// 회원 아이디(PK) => session
+		String id = (String) session.getAttribute("id");
+		if(id == null) {
+			return "redirect:/member/login";
+		}
+		
+
+		// DB에서 가져온 데이터를 view 페이지로 전달
+		model.addAttribute(service.memberInfo(id));
+		logger.info(vo+"");
+	
+		
+		return "/member/deleteForm";
+	}
+	
+	
+	
+	// 회원탈퇴POST
+	//http://localhost:8080/member/delete
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String deletePOST(MemberVO vo, HttpSession session) {
+	
+		logger.info(" deletePOST(vo) 호출 ");
+
+		service.memberDelete(vo);
+		// DB에서 가져온 데이터를 view 페이지로 전달
+		logger.info("회원탈퇴 완료!");
+		session.invalidate();
+	
+		
+		return "redirect:/member/login";
+	}
+	
+	// 회원정보 조회
+	@RequestMapping(value="/list", method = RequestMethod.GET)
+	public String listGET(Model model) {
+		logger.info(" listGET() 호출 ");
+		
+		// 서비스 - 회원정보 목록 가져오기
+		List memberList = service.memberList();
+		// view페이지로 전달
+		model.addAttribute("memberList", memberList); // ${memberList }
+		model.addAttribute(memberList); 			  // ${memberVOList } 헷갈릴 때 ${requestScope } 로 확인하기
+		
+		return "/member/list";
 	}
 	
 }

@@ -15,5 +15,7 @@
 	비밀번호 : ${memberVO.userpw } <br>
 	이름 : ${memberVO.username } <br>
 	이메일 : ${memberVO.useremail } <br>
+	
+	<a href="/member/main">페이지이동</a>
 </body>
 </html>
